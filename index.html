@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IIT Tirupati Rain Outlook</title>
+<meta charset="utf-8"><title>IIT Tirupati Rain Outlook</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
@@ -136,9 +136,12 @@ function build(){
  const idx=[];for(let i=0;i<N;i++)if(END[i]>nowMs&&END[i]-nowMs<=24*3600e3)idx.push(i);
  const pill=document.getElementById('pill'),hl=document.getElementById('hline');
  if(!idx.length){pill.textContent='Run ended';hl.textContent='This model run has no blocks left in the next 24 hours.';return;}
- let m=idx[0];idx.forEach(i=>{if(D.box[i]>D.box[m])m=i});const c=cat(D.box[m]);
- pill.textContent=NAMES[c]==='Dry'?'Mostly dry':'Up to '+NAMES[c].toLowerCase();pill.className='pill k'+c;
- hl.textContent=c==0?'The 9 km model shows no rain over the campus area in the coming blocks.':'Highest class of the coming blocks: '+lab(m)+'. Amounts are uncertain and probably overstated: the 3 km and 1 km runs show much less. Use this for timing.';
+ const wet=idx.filter(i=>D.box[i]>=2.5);const any=idx.filter(i=>D.box[i]>=0.2);
+ const sh=i=>fmt(END[i]-3*3600e3,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'\u2013'+fmt(END[i],{hour:'2-digit',minute:'2-digit'});
+ if(!any.length){pill.textContent='Mostly dry';pill.className='pill k0';hl.textContent='The 9 km model shows no meaningful rain over the campus area in the coming blocks.';return;}
+ pill.textContent='Rain possible';pill.className='pill k2';
+ const pick=wet.length?wet:[any.reduce((m,i)=>D.box[i]>D.box[m]?i:m,any[0])];
+ hl.textContent='Model timing: rain mainly in '+pick.map(sh).join('; ')+' IST. This is a timing guide only. The amount is uncertain and probably overstated, and the 3 km and 1 km runs show much less.';
 }
 build();sel(cur);
 document.getElementById('sl').oninput=e=>sel(+e.target.value);
