@@ -52,7 +52,7 @@ details summary{cursor:pointer;font-weight:600}
 <h1>Rain outlook for IIT Tirupati campus</h1>
 <p class="muted">9 km WRF model run by the HYDROS Lab, started from GFS data of 20 Oct 2026 06:00 UTC (11:30 IST). Rain is shown in 3-hour blocks, in Indian Standard Time. This run covers 20 Oct 11:30 to 22 Oct 11:30 IST.</p></div>
 
-<div class="warn"><b>Please read:</b> this is a research product, not an official forecast. At 9 km the model is good at saying <i>when</i> rain may come, but it often overstates <i>how much</i>. For warnings use IMD (mausam.imd.gov.in).</div>
+<div class="warn"><b>Please read:</b> this is a research product, not an official forecast. At 9 km the model is useful for saying <i>when</i> rain may come, but the <i>amount</i> can be well off in either direction. For warnings use IMD (mausam.imd.gov.in).</div>
 
 <section class="card"><h2>Next 24 hours (campus area)</h2>
 <div class="hero"><span id="pill" class="pill k0">&hellip;</span><p id="hline" class="muted"></p></div></section>
@@ -74,8 +74,8 @@ details summary{cursor:pointer;font-weight:600}
 <section class="card"><details><summary>How to read this &middot; limits</summary>
 <ul class="sm muted" style="margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px">
 <li><b>Classes</b> (per 3 hours): dry under 0.2 mm, light 0.2&ndash;2.5, moderate 2.5&ndash;7.5, heavy 7.5&ndash;20, very heavy above 20 mm.</li>
-<li><b>Why 9 km?</b> On 20&ndash;21 Oct the 9 km run produced rain in the same periods people reported it; the finer 3 km and 1 km runs gave almost none. This is one event, so it is not proof the 9 km run is generally better.</li>
-<li><b>Amounts are uncertain.</b> In earlier events the 9 km run gave several times more rain than IMD measured. The 3 km and 1 km runs forecast far less for 22 Oct (about 7 mm for the day against 17 mm here). Verification against IMD data is under way.</li>
+<li><b>Why 9 km?</b> On 20&ndash;21 Oct the 9 km run produced rain in the same periods people reported it; the 3 km and 1 km runs with convection switched off gave almost none, while a 3 km run with convection on did as well as 9 km. This is one event, so it is not proof that any one setting is generally better.</li>
+<li><b>Amounts are uncertain.</b> For the IMD day of 21 Oct the 9 km run gave 13.5 mm over the campus box against 55.4 mm measured (too low); in an earlier event (17 Oct) it gave several times more than IMD measured. The 3 km and 1 km runs differ widely from it for 22 Oct (3 km with convection off about 7 mm, with convection on about 42 mm, against 17 mm here).</li>
 <li>The forecast is one model run from one set of starting data, and it gets less reliable the further ahead you look.</li>
 <li>Coastline is approximate. Map covers 9.5&ndash;17.5&deg;N, 75.5&ndash;83.5&deg;E.</li></ul></details></section>
 </main>
@@ -141,7 +141,7 @@ function build(){
  if(!any.length){pill.textContent='Mostly dry';pill.className='pill k0';hl.textContent='The 9 km model shows no meaningful rain over the campus area in the coming blocks.';return;}
  pill.textContent='Rain possible';pill.className='pill k2';
  const pick=wet.length?wet:[any.reduce((m,i)=>D.box[i]>D.box[m]?i:m,any[0])];
- hl.textContent='Model timing: rain mainly in '+pick.map(sh).join('; ')+' IST. This is a timing guide only. The amount is uncertain and probably overstated, and the 3 km and 1 km runs show much less.';
+ hl.textContent='Model timing: rain mainly in '+pick.map(sh).join('; ')+' IST. This is a timing guide only. The amount is uncertain, and other model runs (3 km, 1 km) give very different totals.';
 }
 build();sel(cur);
 document.getElementById('sl').oninput=e=>sel(+e.target.value);
